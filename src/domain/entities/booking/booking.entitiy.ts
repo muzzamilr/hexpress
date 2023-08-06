@@ -1,36 +1,30 @@
 import { UUIDVO } from "@domain/valueObjects/uuid.vo";
+import { BaseEntity } from "../base/base.entity";
 
 interface IBooking {
   clientId: UUIDVO;
   arrivalDate: Date;
   departurDate: Date;
-  bookingId: UUIDVO;
 }
 
-class BookingEntity implements IBooking {
+class BookingEntity extends BaseEntity implements IBooking {
   readonly departurDate: Date;
   readonly clientId: UUIDVO;
   readonly arrivalDate: Date;
-  readonly bookingId: UUIDVO;
 
   private constructor(private readonly data: IBooking) {
+    super();
     this.departurDate = data.departurDate;
     this.arrivalDate = data.arrivalDate;
     this.clientId = data.clientId;
-    this.bookingId = data.bookingId;
   }
 
-  static create(
-    clientId: UUIDVO,
-    bookingId: UUIDVO,
-    arrivalDate: Date,
-    departurDate: Date
-  ) {
+  static create(value: IBooking) {
+    const { clientId, arrivalDate, departurDate } = value;
     return new BookingEntity({
       clientId,
       arrivalDate,
       departurDate,
-      bookingId,
     });
   }
 }
