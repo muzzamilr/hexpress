@@ -1,0 +1,50 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  Id String @id @default(uuid())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email    String @unique
+  password String
+  name     String
+
+  Booking Booking[]
+
+  @@map("users")
+}
+
+model Room {
+  Id           String  @id @default(uuid())
+  roomName     String  @unique
+  source       String
+  availability Boolean @default(true)
+
+  bookings Booking[]
+
+  @@map("rooms")
+}
+
+model Booking {
+  Id            String   @id @default(uuid())
+  clientId      String
+  roomName      String
+  arrivalDate   DateTime
+  departureDate DateTime
+
+  user User @relation(fields: [clientId], references: [Id])
+  room Room @relation(fields: [roomName], references: [roomName])
+
+  @@map("bookings")
+}
