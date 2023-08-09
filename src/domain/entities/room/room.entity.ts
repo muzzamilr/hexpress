@@ -1,13 +1,15 @@
 import { BaseEntity } from "../base/base.entity";
 
+type TRoomType = "Standard" | "Deluxe" | "Suite";
+
 interface IRoom {
   roomName: string;
-  source: string;
+  source: TRoomType;
 }
 
-class RoomEntity extends BaseEntity implements IRoom {
+export class RoomEntity extends BaseEntity implements IRoom {
   readonly roomName: string;
-  readonly source: string;
+  readonly source: TRoomType;
   private constructor(private readonly data: IRoom) {
     super();
     this.roomName = data.roomName;

@@ -5,26 +5,24 @@ interface IBooking {
   clientId: UUIDVO;
   arrivalDate: Date;
   departurDate: Date;
+  roomName: string;
 }
 
-class BookingEntity extends BaseEntity implements IBooking {
+export class BookingEntity extends BaseEntity implements IBooking {
   readonly departurDate: Date;
   readonly clientId: UUIDVO;
   readonly arrivalDate: Date;
+  readonly roomName: string;
 
   private constructor(private readonly data: IBooking) {
     super();
     this.departurDate = data.departurDate;
     this.arrivalDate = data.arrivalDate;
     this.clientId = data.clientId;
+    this.roomName = data.roomName;
   }
 
   static create(value: IBooking) {
-    const { clientId, arrivalDate, departurDate } = value;
-    return new BookingEntity({
-      clientId,
-      arrivalDate,
-      departurDate,
-    });
+    return new BookingEntity(value);
   }
 }
