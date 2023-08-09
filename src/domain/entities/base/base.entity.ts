@@ -7,13 +7,25 @@ export interface IBaseEntity {
 }
 
 export abstract class BaseEntity implements IBaseEntity {
-  Id: UUIDVO;
-  createdAt: Date;
-  updatedAt: Date;
+  private _id: UUIDVO;
+  private _createdAt: Date;
+  private _updatedAt: Date;
 
   protected constructor() {
-    this.Id = UUIDVO.new();
-    this.createdAt = new Date();
-    this.updatedAt = this.createdAt;
+    this._id = UUIDVO.new();
+    this._createdAt = new Date();
+    this._updatedAt = this.createdAt;
+  }
+
+  get Id(): UUIDVO {
+    return this._id;
+  }
+
+  get createdAt(): Date {
+    return this._createdAt;
+  }
+
+  get updatedAt(): Date {
+    return this._updatedAt;
   }
 }
