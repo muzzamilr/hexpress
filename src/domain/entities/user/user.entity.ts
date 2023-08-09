@@ -1,22 +1,28 @@
+import { EmailVO } from "@domain/valueObjects/email.vo";
 import { BaseEntity, IBaseEntity } from "../base/base.entity";
 
 export interface IUserEntity extends IBaseEntity {
-  username: string;
+  email: EmailVO;
   name: string;
   password: string;
 }
 
+export type NewUserInput = Omit<IUserEntity, "email"> & { email: string };
+
 export class UserEntity extends BaseEntity implements IUserEntity {
-  username: string;
+  email: EmailVO;
   name: string;
   password: string;
   private constructor(userData: IUserEntity) {
     super();
-    this.username = userData.username;
+    this.email = userData.email;
     this.name = userData.name;
     this.password = userData.password;
   }
-  create(userData: IUserEntity) {
-    return new UserEntity(userData);
+  create(userData: NewUserInput) {
+    return new UserEntity({
+      ...userData,
+      email: EmailVO.fromStr(userData.email).unwrap(),
+    });
   }
 }
