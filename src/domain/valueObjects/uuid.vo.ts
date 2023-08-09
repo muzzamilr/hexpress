@@ -24,6 +24,6 @@ export class UUIDVO {
     if (validated.success) {
       return Result.Ok(new UUIDVO(validated.data));
     }
-    return Result.Err(new InvalidUUID("Invalid uuid"));
+    return Result.Err(new InvalidUUID(val));
   }
 }
