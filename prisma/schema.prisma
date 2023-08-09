@@ -20,7 +20,7 @@ model User {
   password String
   name     String
 
-  Booking Booking[]
+  bookings Booking[]
 
   @@map("users")
 }
